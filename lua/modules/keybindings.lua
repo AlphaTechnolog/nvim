@@ -32,12 +32,17 @@ function _keybindings:tree_maps()
   Api.nvim_set_keymap('n', '<C-n>', '<cmd>NvimTreeToggle<cr>', { silent = true, noremap = true })
 end
 
+function _keybindings:trouble_maps()
+  Api.nvim_set_keymap('n', '<space>xx', '<cmd>TroubleToggle<cr>', { silent = true, noremap = true })
+end
+
 function _keybindings:setup()
 	self:populate_gotonormal()
 	self:populate_buffnavigation()
   self:global_maps()
 	self:telescope_maps()
   self:tree_maps()
+  self:trouble_maps()
 end
 
 local function new()

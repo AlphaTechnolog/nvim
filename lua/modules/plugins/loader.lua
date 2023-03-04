@@ -61,6 +61,57 @@ function _loader:load_plugins()
           end,
           dependencies = {
             {
+              "glepnir/lspsaga.nvim",
+              event = "BufRead",
+              dependencies = {
+                "nvim-tree/nvim-web-devicons",
+                "nvim-treesitter/nvim-treesitter"
+              },
+              config = function ()
+                require("lspsaga").setup({})
+
+                local keymap = vim.keymap.set
+
+                keymap("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+                keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+                keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
+                keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
+                keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
+                keymap("n","gd", "<cmd>Lspsaga goto_definition<CR>")
+                keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
+                keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
+                keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+                keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+                keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
+                keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+                keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+                keymap("n", "[E", function()
+                  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end)
+                keymap("n", "]E", function()
+                  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end)
+                keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
+                keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+                keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+                keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
+                keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+
+                -- not lsp saga really related but display gutter lsp icons
+                local signs = {
+                  Error = "",
+                  Warn = "",
+                  Hint = "",
+                  Info = "",
+                }
+
+                for type, icon in pairs(signs) do
+                  local hl = "DiagnosticSign" .. type
+                  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+                end
+              end,
+            },
+            {
               "neovim/nvim-lspconfig",
               config = function ()
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -73,9 +124,54 @@ function _loader:load_plugins()
                   "hrsh7th/nvim-cmp",
                   config = function ()
                     local cmp = require("cmp")
+                    local lspkind = require("lspkind")
                     local luasnip = require("luasnip")
 
                     cmp.setup({
+                      experimental = {
+                        ghost_text = true,
+                      },
+                      formatting = {
+                        format = lspkind.cmp_format({
+                          mode = "symbol_text",
+                          menu = ({
+                            buffer = "[Buffer]",
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[Snippet]",
+                            nvim_lua = "[Lua]",
+                            latex_symbols = "[Latex]",
+                            copilot = "[Copilot]",
+                          }),
+                          symbol_map = {
+                            Copilot = '',
+                            Text = "",
+                            Method = "",
+                            Function = "",
+                            Constructor = "",
+                            Field = "ﰠ",
+                            Variable = "",
+                            Class = "ﴯ",
+                            Interface = "",
+                            Module = "",
+                            Property = "ﰠ",
+                            Unit = "塞",
+                            Value = "",
+                            Enum = "",
+                            Keyword = "",
+                            Snippet = "",
+                            Color = "",
+                            File = "",
+                            Reference = "",
+                            Folder = "",
+                            EnumMember = "",
+                            Constant = "",
+                            Struct = "פּ",
+                            Event = "",
+                            Operator = "",
+                            TypeParameter = ""
+                          },
+                        })
+                      },
                       snippet = {
                         expand = function (args)
                           require("luasnip").lsp_expand(args.body)
@@ -142,8 +238,11 @@ function _loader:load_plugins()
                         { name = "cmdline" }
                       })
                     })
+
+                    vim.cmd [[ highlight link CmpItemMenu Copilot ]]
                   end,
                   dependencies = {
+                    "onsails/lspkind.nvim",
                     "hrsh7th/cmp-nvim-lsp",
                     "hrsh7th/cmp-buffer",
                     "hrsh7th/cmp-path",
@@ -196,6 +295,7 @@ function _loader:load_plugins()
     {
       "xiyaowong/nvim-transparent",
       lazy = false,
+      enabled = true,
       priority = 1000,
       config = function ()
         require("transparent").setup({
@@ -207,6 +307,8 @@ function _loader:load_plugins()
             "NvimTreeVertSplit",
             "NvimTreeCursorLine",
             "NvimTreeCursorLineNC",
+            "FloatBorder",
+            "Pmenu",
             "CursorLine",
             "CursorLineNC",
             "VertSplit",
@@ -214,7 +316,13 @@ function _loader:load_plugins()
             "TelescopeBorder",
             "StatusLine",
             "StatusLineNC",
-            "MsgArea"
+            "MsgArea",
+            "NoiceMini",
+            "LspInfoTitle",
+            "LspInfoBorder",
+            "LspSagaDiagnosticInfo",
+            "LspSagaSignatureHelpBorder",
+            "LspTroubleNormal"
           }
         })
       end
@@ -327,7 +435,9 @@ function _loader:load_plugins()
 						"vim",
 						"svelte",
 						"vue",
-            "nix"
+            "nix",
+            "markdown",
+            "markdown_inline"
 					},
 					highlight = {
 						enable = true,
@@ -339,6 +449,58 @@ function _loader:load_plugins()
 				})
 			end,
 		},
+    {
+      "folke/noice.nvim",
+      config = function ()
+        require("noice").setup({
+          lsp = {
+            progress = {
+              enabled = false,
+            },
+            override = {
+              ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+              ["vim.lsp.util.stylize_markdown"] = true,
+              ["cmp.entry.get_documentation"] = true,
+            }
+          },
+          presets = {
+            bottom_search = true,
+            command_palette = true,
+            long_message_to_split = true,
+            lsp_doc_border = true,
+          }
+        })
+      end,
+      dependencies = {
+        "munifTanjim/nui.nvim",
+        {
+          "rcarriga/nvim-notify",
+          config = function ()
+            require("notify").setup({
+              background_colour = "#000000"
+            })
+          end
+        }
+      }
+    },
+    {
+      "folke/trouble.nvim",
+      cmd = {"Trouble", "TroubleClose", "TroubleToggle", "TroubleRefresh"},
+      dependencies = {
+        "nvim-tree/nvim-web-devicons"
+      },
+      config = function ()
+        require("trouble").setup({
+          position = "bottom",
+          height = 10,
+          width = 50,
+          icons = true,
+          mode = "workspace_diagnostics",
+          indent_lines = true,
+          use_diagnostic_signs = false
+        })
+      end
+    }
 	}, {
     git = { timeout = 10000 }
   })
