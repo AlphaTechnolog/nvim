@@ -68,7 +68,11 @@ function _loader:load_plugins()
                 "nvim-treesitter/nvim-treesitter"
               },
               config = function ()
-                require("lspsaga").setup({})
+                require("lspsaga").setup({
+                  symbol_in_winbar = {
+                    enable = false
+                  }
+                })
 
                 local keymap = vim.keymap.set
 
@@ -279,11 +283,12 @@ function _loader:load_plugins()
 			"decaycs/decay.nvim",
 			priority = 1000,
 			lazy = false,
+      enabled = false,
 			config = function()
 				require("decay").setup({
 					style = "decayce",
 					italics = {
-						code = true,
+						code = false,
 						comments = true,
 					},
 					nvim_tree = {
@@ -293,9 +298,34 @@ function _loader:load_plugins()
 			end,
 		},
     {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      lazy = false,
+      config = function ()
+        require("catppuccin").setup({
+          flavour = "macchiato",
+          styles = {
+            comments = { "italic" },
+            conditionals = { "italic" },
+            functions = { "italic" },
+          },
+          integrations = {
+            cmp = true,
+            nvimtree = true,
+            telescope = true,
+            mini = true,
+            notify = true,
+          }
+        })
+
+        vim.cmd [[ colorscheme catppuccin ]]
+      end
+    },
+    {
       "xiyaowong/nvim-transparent",
       lazy = false,
-      enabled = true,
+      enabled = false,
       priority = 1000,
       config = function ()
         require("transparent").setup({
@@ -360,7 +390,8 @@ function _loader:load_plugins()
       },
       lazy = false,
       config = function()
-        local function theme()
+        ---@diagnostic disable-next-line: unused-local,unused-function
+        local function transparent_decay()
           local decay = require("lualine.themes.decay")
           local colors = require("decay.core").get_colors(G.decay_style)
 
@@ -378,7 +409,7 @@ function _loader:load_plugins()
 
         require('lualine').setup({
           options = {
-            theme = theme(),
+            theme = 'catppuccin',
             section_separators = { left = '', right = '' },
             component_separators = { left = '', right = '' },
             globalstatus = true,

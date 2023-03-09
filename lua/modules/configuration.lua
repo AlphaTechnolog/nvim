@@ -25,7 +25,7 @@ local function new()
     cmdheight = 0,
     showmode = false,
     wrap = false,
-		guifont = "monospace:h12",
+		guifont = "monospace:h13",
     clipboard = 'unnamedplus',
     mouse = 'a',
 	}
