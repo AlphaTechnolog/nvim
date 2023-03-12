@@ -482,6 +482,7 @@ function _loader:load_plugins()
 		},
     {
       "folke/noice.nvim",
+      enabled = true,
       config = function ()
         require("noice").setup({
           lsp = {
