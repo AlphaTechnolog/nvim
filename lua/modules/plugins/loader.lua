@@ -286,6 +286,13 @@ function _loader:load_plugins()
         require("colorizer").setup()
       end
     },
+    {
+      "akinsho/bufferline.nvim",
+      event = { "BufCreate", "BufAdd", "BufCreate", "BufRead" },
+      config = function ()
+        require("bufferline").setup()
+      end
+    },
 		{
 			"decaycs/decay.nvim",
 			priority = 1000,
@@ -490,7 +497,7 @@ function _loader:load_plugins()
 		},
     {
       "folke/noice.nvim",
-      enabled = true,
+      enabled = false,
       config = function ()
         require("noice").setup({
           lsp = {
