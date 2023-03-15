@@ -279,20 +279,27 @@ function _loader:load_plugins()
         }
       }
     },
+    {
+      "norcalli/nvim-colorizer.lua",
+			event = { "BufCreate", "BufAdd", "BufCreate", "BufRead" },
+      config = function ()
+        require("colorizer").setup()
+      end
+    },
 		{
 			"decaycs/decay.nvim",
 			priority = 1000,
 			lazy = false,
-      enabled = false,
+      enabled = true,
 			config = function()
 				require("decay").setup({
-					style = "decayce",
+					style = "cosmic",
 					italics = {
 						code = false,
 						comments = true,
 					},
 					nvim_tree = {
-						contrast = false,
+						contrast = true,
 					},
 				})
 			end,
@@ -301,6 +308,7 @@ function _loader:load_plugins()
       "catppuccin/nvim",
       name = "catppuccin",
       priority = 1000,
+      enabled = false,
       lazy = false,
       config = function ()
         require("catppuccin").setup({
@@ -409,7 +417,7 @@ function _loader:load_plugins()
 
         require('lualine').setup({
           options = {
-            theme = 'catppuccin',
+            theme = transparent_decay(),
             section_separators = { left = '', right = '' },
             component_separators = { left = '', right = '' },
             globalstatus = true,
