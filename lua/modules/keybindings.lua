@@ -20,6 +20,7 @@ end
 function _keybindings:global_maps()
   Api.nvim_set_keymap('n', '<C-s>', '<cmd>w!<cr>', { noremap = true, silent = true })
   Api.nvim_set_keymap('n', '<C-q>', '<cmd>qa!<cr>', { noremap = true, silent = true })
+  Api.nvim_set_keymap('n', '<C-b>', '<cmd>bd!<cr>', { noremap = true, silent = true })
   Api.nvim_set_keymap('n', '<space>x', '<cmd>bd!<cr>', { noremap = true, silent = true })
 end
 

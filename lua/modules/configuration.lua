@@ -22,7 +22,7 @@ local function new()
 		smartindent = true,
 		autoindent = true,
 		laststatus = 0,
-    cmdheight = 0,
+    cmdheight = 1,
     showmode = false,
     wrap = false,
 		guifont = "monospace:h8",

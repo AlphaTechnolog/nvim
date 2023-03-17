@@ -290,7 +290,24 @@ function _loader:load_plugins()
       "akinsho/bufferline.nvim",
       event = { "BufCreate", "BufAdd", "BufCreate", "BufRead" },
       config = function ()
-        require("bufferline").setup()
+        require("bufferline").setup {
+          options = {
+            color_icons = true,
+            hover = {
+              enabled = true,
+              delay = 300,
+              reveal = {'close'}
+            },
+            offsets = {
+              {
+                filetype = "NvimTree",
+                text = '',
+                text_align = 'center',
+                separator = true,
+              }
+            }
+          }
+        }
       end
     },
 		{
@@ -405,12 +422,11 @@ function _loader:load_plugins()
       },
       lazy = false,
       config = function()
+        local decay = require("lualine.themes.decay")
+        local colors = require("decay.core").get_colors(G.decay_style)
+
         ---@diagnostic disable-next-line: unused-local,unused-function
         local function transparent_decay()
-          local decay = require("lualine.themes.decay")
-          local colors = require("decay.core").get_colors(G.decay_style)
-
-          -- makes decay backgrounds transparents
           for mode, secs in pairs(decay) do
             for sec, his in pairs(secs) do
               if his.bg == colors.statusline_bg then
@@ -438,19 +454,29 @@ function _loader:load_plugins()
             lualine_z = {},
           },
           sections = {
-            lualine_a = {
+            lualine_a = {},
+            lualine_b = {},
+            lualine_c = {},
+            lualine_x = {
+            },
+            lualine_y = {
+            },
+            lualine_z = {
               {
                 'mode',
                 fmt = function (str)
                   return string.upper(str:sub(1, 1)) .. string.lower(str:sub(2, -1))
-                end
+                end,
+              },
+              {
+                'filetype',
+                color = { bg = colors.lighter, fg = colors.foreground },
+              },
+              {
+                'branch',
+                color = { bg = colors.statusline_bg, fg = colors.accent },
               }
             },
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {},
-            lualine_z = {},
           },
         })
       end
@@ -497,7 +523,7 @@ function _loader:load_plugins()
 		},
     {
       "folke/noice.nvim",
-      enabled = false,
+      enabled = true,
       config = function ()
         require("noice").setup({
           lsp = {
