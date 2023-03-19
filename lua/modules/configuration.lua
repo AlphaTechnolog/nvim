@@ -2,7 +2,15 @@ local tbl = require("helpers.tbl")
 
 local _configuration = { mt = {}, _private = {} }
 
+function _configuration:specific_languages()
+  Vim.cmd [[ autocmd FileType go setlocal tabstop=4 shiftwidth=4 expandtab ]]
+  Vim.cmd [[ autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab ]]
+  Vim.cmd [[ autocmd FileType php setlocal tabstop=4 shiftwidth=4 expandtab nosmartindent ]]
+  Vim.cmd [[ autocmd FileType nix setlocal nosmartindent ]]
+end
+
 function _configuration:setup()
+  self:specific_languages()
 	for k, v in pairs(self._private.options) do
 		Opt[k] = v
 	end
