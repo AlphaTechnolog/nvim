@@ -317,7 +317,7 @@ function _loader:load_plugins()
       enabled = true,
 			config = function()
 				require("decay").setup({
-					style = "cosmic",
+					style = "default",
 					italics = {
 						code = false,
 						comments = true,
@@ -357,7 +357,7 @@ function _loader:load_plugins()
     {
       "xiyaowong/nvim-transparent",
       lazy = false,
-      enabled = true,
+      enabled = false,
       priority = 1000,
       config = function ()
         require("transparent").setup({
@@ -527,7 +527,7 @@ function _loader:load_plugins()
 		},
     {
       "folke/noice.nvim",
-      enabled = true,
+      enabled = false,
       config = function ()
         require("noice").setup({
           lsp = {

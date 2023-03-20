@@ -33,7 +33,7 @@ local function new()
     cmdheight = 1,
     showmode = false,
     wrap = false,
-		guifont = "monospace:h8",
+		guifont = "monospace:h14",
     clipboard = 'unnamedplus',
     mouse = 'a',
 	}
