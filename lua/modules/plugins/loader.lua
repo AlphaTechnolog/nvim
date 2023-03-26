@@ -579,6 +579,7 @@ function _loader:load_plugins()
       end
     }
 	}, {
+    lockfile = Fn.stdpath "cache" .. "/lazy-lock.json",
     git = { timeout = 10000 }
   })
 end
