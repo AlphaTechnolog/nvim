@@ -12,7 +12,7 @@ end
 
 function _autocmds:setup()
   -- self:underline_cursor_at_exit()
-  self:beam_cursor_at_exit()
+  -- self:beam_cursor_at_exit()
 end
 
 local function new()
