@@ -358,7 +358,6 @@ function _loader:load_plugins()
       "xiyaowong/nvim-transparent",
       lazy = false,
       enabled = true,
-      priority = 1000,
       config = function ()
         require("transparent").setup({
           enable = true,
