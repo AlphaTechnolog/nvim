@@ -360,7 +360,6 @@ function _loader:load_plugins()
       enabled = true,
       config = function ()
         require("transparent").setup({
-          enable = true,
           extra_groups = {
             "Normal",
             "EndOfBuffer",
