@@ -462,24 +462,32 @@ function _loader:load_plugins()
                 fmt = function (str)
                   return string.upper(str:sub(1, 1)) .. string.lower(str:sub(2, -1))
                 end,
-                separator = { right = '' }
               },
               {
                 'filetype',
                 color = { bg = colors.lighter, fg = colors.foreground },
-                separator = { right = '' }
               },
               {
                 'branch',
                 color = { bg = colors.statusline_bg, fg = colors.accent },
-                separator = { right = '' }
               }
             },
             lualine_b = {},
             lualine_c = {},
             lualine_x = {},
-            lualine_y = {},
-            lualine_z = {},
+            lualine_y = {
+              {
+                'encoding',
+                color = { bg = colors.statusline_bg, fg = colors.foreground },
+              },
+              {
+                'fileformat',
+                color = { bg = colors.lighter, fg = colors.foreground }
+              }
+            },
+            lualine_z = {
+              {'progress'}
+            },
           },
         })
       end
