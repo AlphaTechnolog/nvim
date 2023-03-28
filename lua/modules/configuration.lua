@@ -36,6 +36,7 @@ local function new()
 		guifont = "monospace:h14",
     clipboard = 'unnamedplus',
     mouse = 'a',
+    guicursor = "i:hor10"
 	}
 
 	return ret
