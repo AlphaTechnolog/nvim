@@ -24,8 +24,8 @@ end
 
 local function has_words_before()
   unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+  local line, col = unpack(Vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and Vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
 end
 
 function _loader:load_plugins()
@@ -456,14 +456,7 @@ function _loader:load_plugins()
             lualine_z = {},
           },
           sections = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {
-            },
-            lualine_y = {
-            },
-            lualine_z = {
+            lualine_a = {
               {
                 'mode',
                 fmt = function (str)
@@ -479,6 +472,11 @@ function _loader:load_plugins()
                 color = { bg = colors.statusline_bg, fg = colors.accent },
               }
             },
+            lualine_b = {},
+            lualine_c = {},
+            lualine_x = {},
+            lualine_y = {},
+            lualine_z = {},
           },
         })
       end
