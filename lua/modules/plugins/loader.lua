@@ -37,6 +37,31 @@ function _loader:load_plugins()
 
 	self._private.lazy.setup({
     {
+      "jose-elias-alvarez/null-ls.nvim",
+      after = "mason.nvim",
+      config = function ()
+        -- what an awesome plugin!
+        local null_ls = require("null-ls")
+
+        -- applying sources
+        null_ls.setup {
+          sources = {
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.formatting.prettier,
+            null_ls.builtins.completion.spell
+          }
+        }
+
+        -- setting up formatting
+        Vim.cmd [[
+          augroup FormatAutogroup
+            autocmd!
+            autocmd BufWritePost * lua vim.lsp.buf.format()
+          augroup END
+        ]]
+      end
+    },
+    {
       "williamboman/mason.nvim",
 			event = { "BufCreate", "BufAdd", "BufCreate", "BufRead" },
       config = function ()
