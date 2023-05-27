@@ -1,18 +1,25 @@
-local Core = require("core")
-local core = Core()
+local present, Loader = pcall(require, "plugins.loader")
+if not present then
+  error("cannot load the plugins loader: " .. Loader)
+end
 
--- defining some globals
+require("opts")
+require("maps")
 
----@diagnostic disable-next-line: undefined-global
-Vim = vim
-Api = Vim.api
-Cmd = Vim.cmd
-Fn = Vim.fn
-G = Vim.g
-Opt = Vim.opt
-Bo = Vim.bo
-Wo = Vim.wo
+local loader = Loader()
 
-for _, mod in ipairs(core:modules()) do
-	core:load_mod(mod)
+local ok, err = pcall(function ()
+  loader:install_lazy()
+end)
+
+if not ok then
+  error("Cannot check for lazy.nvim installation (required): " .. err)
+end
+
+local configured_lazy, errmsg = pcall(function ()
+  loader:configure_lazy()
+end)
+
+if not configured_lazy then
+  error("Cannot configure lazy.nvim: " .. errmsg)
 end
