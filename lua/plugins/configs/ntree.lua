@@ -4,7 +4,7 @@ vim.g.loaded_netrwPlugin = 1
 require("nvim-tree").setup({
   view = {
     cursorline = false,
-    width = 40,
+    width = 25,
   },
   renderer = {
     root_folder_label = false
