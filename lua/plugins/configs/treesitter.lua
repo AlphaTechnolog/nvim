@@ -4,6 +4,10 @@ if not present then
   return
 end
 
+require "nvim-treesitter.install".compilers = {
+  "clang++"
+}
+
 treesitter.setup {
   ensure_installed = {
     "c",
