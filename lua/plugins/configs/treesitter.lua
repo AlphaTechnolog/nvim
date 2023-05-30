@@ -5,7 +5,7 @@ if not present then
 end
 
 require "nvim-treesitter.install".compilers = {
-  "clang++"
+  "gcc", "g++"
 }
 
 treesitter.setup {
