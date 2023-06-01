@@ -23,7 +23,8 @@ treesitter.setup {
     "html",
     "css",
     "bash",
-    "nix"
+    "nix",
+    "rust"
   },
   highlight = {
     enable = true,
