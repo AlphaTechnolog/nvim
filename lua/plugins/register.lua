@@ -1,11 +1,20 @@
 return {
-  {
+  --[[{
     "decaycs/decay.nvim",
     lazy = false,
+    disabled = true,
     priority = 1000,
     branch = "refactor",
     config = function ()
       require "plugins.configs.decay"
+    end
+  },--]]
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function ()
+      require "plugins.configs.tokyonight"
     end
   },
   {
@@ -95,6 +104,8 @@ return {
     },
     config = function ()
       require "plugins.configs.lualine"
+      -- complex just werks with decay
+      -- require "plugins.configs.lualine-complex"
     end
   }
 }
