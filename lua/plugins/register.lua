@@ -1,5 +1,5 @@
 return {
-  --[[{
+  {
     "decaycs/decay.nvim",
     lazy = false,
     disabled = true,
@@ -8,15 +8,15 @@ return {
     config = function ()
       require "plugins.configs.decay"
     end
-  },--]]
-  {
+  },
+  --[[{
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
     config = function ()
       require "plugins.configs.tokyonight"
     end
-  },
+  },--]]
   {
     "windwp/nvim-autopairs",
     config = function ()
