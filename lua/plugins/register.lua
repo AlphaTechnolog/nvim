@@ -103,7 +103,8 @@ return {
       "nvim-tree/nvim-web-devicons"
     },
     config = function ()
-      require "plugins.configs.lualine"
+      require "plugins.configs.lualine-decay"
+      -- require "plugins.configs.lualine"
       -- complex just werks with decay
       -- require "plugins.configs.lualine-complex"
     end
