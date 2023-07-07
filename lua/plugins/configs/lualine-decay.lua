@@ -78,6 +78,7 @@ end
 
 ins_left {
     'filesize',
+    color = { fg = colors.yellow, gui = 'italic' },
     cond = isnt_empty_buffer
 }
 
