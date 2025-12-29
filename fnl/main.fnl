@@ -1,5 +1,6 @@
 (local check-theme-diffs? false)
-(local main-terminal :alacritty)
+(local enable-terminal-adaptation? false)
+(local main-terminal :alacritty) ; supports alacritty, kitty, ghostty (though ghostty's config file parsing is TODO)
 
 (set vim.o.number true)
 (set vim.o.relativenumber true)
@@ -153,21 +154,24 @@
 ; ==maple theme==
 ; (vim.cmd.colorscheme :mapledark)
 
-; adapt to terminal colors
-(let [bg     (fn [x] x.background)
-      fg     (fn [x] x.foreground)
-      black  (fn [x] x.black)
-      black2 (fn [x] x.bright-black)]
-  (hi :Normal bg fg)
-  (hi :EndOfBuffer bg bg)
-  (hi :WinSeparator nil black)
-  (hi :VertSplit nil black)
-  (hi :StatusLine black fg)
-  (hi :StatusLineNC bg black2)
-  (hi :LineNr bg black2)
-  (hi :TelescopeNormal bg fg)
-  (hi :TelescopeBorder bg black)
-  (hi :TelescopeSelection black fg))
+(fn adapt-to-terminal []
+  (if (= true enable-terminal-adaptation?)
+      (do (let [bg     (fn [x] x.background)
+                fg     (fn [x] x.foreground)
+                black  (fn [x] x.black)
+                black2 (fn [x] x.foreground)]
+            (hi :Normal bg fg)
+            (hi :EndOfBuffer bg bg)
+            (hi :WinSeparator nil black)
+            (hi :VertSplit nil black)
+            (hi :StatusLine black fg)
+            (hi :StatusLineNC bg black2)
+            (hi :LineNr bg black2)
+            (hi :TelescopeNormal bg fg)
+            (hi :TelescopeBorder bg black)
+            (hi :TelescopeSelection black fg)))))
+
+(adapt-to-terminal)
 
 ; fuzzy finder
 (let [telescope (require "telescope.builtin")]
