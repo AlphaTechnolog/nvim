@@ -158,7 +158,7 @@
       (do (let [bg     (fn [x] x.background)
                 fg     (fn [x] x.foreground)
                 black  (fn [x] x.black)
-                black2 (fn [x] x.foreground)]
+                black2 (fn [x] x.bright-black)]
             (hi :Normal bg fg)
             (hi :EndOfBuffer bg bg)
             (hi :WinSeparator nil black)
