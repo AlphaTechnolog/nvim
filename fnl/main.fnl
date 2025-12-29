@@ -154,7 +154,7 @@
 ; (vim.cmd.colorscheme :mapledark)
 
 (fn adapt-to-terminal []
-  (if (= true enable-terminal-adaptation?)
+  (if enable-terminal-adaptation?
       (do (let [bg     (fn [x] x.background)
                 fg     (fn [x] x.foreground)
                 black  (fn [x] x.black)
