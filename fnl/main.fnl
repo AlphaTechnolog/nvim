@@ -67,9 +67,8 @@
 (fn parse-alacritty-config []
   (let [filename (.. (os.getenv :HOME) "/.config/alacritty/alacritty.toml")
         toml (require :toml)]
-    (var contents "")
-    (with-open [f (io.open filename)] (set contents (f:read "*a")))
-    (toml.parse contents)))
+    (with-open [f (io.open filename)]
+      (toml.parse (f:read "*a")))))
 
 ; TODO
 (fn parse-ghostty-config [] {})
