@@ -1,0 +1,84 @@
+{
+  "plugins": {
+    "alabaster.nvim": {
+      "rev": "59f1a91",
+      "src": "https://github.com/p00f/alabaster.nvim"
+    },
+    "auto-pairs": {
+      "rev": "39f06b8",
+      "src": "https://github.com/jiangmiao/auto-pairs"
+    },
+    "base16.nvim": {
+      "rev": "340e9140e95a6e98d8a36b4a2e246cca1a2a3516",
+      "src": "https://github.com/Soares/base16.nvim"
+    },
+    "blink.cmp": {
+      "rev": "8743384",
+      "src": "https://github.com/saghen/blink.cmp"
+    },
+    "colorbuddy.nvim": {
+      "rev": "8b968581e5c19d22a861d5f3fe5dbd83394fa681",
+      "src": "https://github.com/tjdevries/colorbuddy.nvim"
+    },
+    "diffview.nvim": {
+      "rev": "4516612",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "everforest": {
+      "rev": "0909c23",
+      "src": "https://github.com/sainnhe/everforest"
+    },
+    "friendly-snippets": {
+      "rev": "572f566",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "gruvbox-material": {
+      "rev": "834dbf2",
+      "src": "https://github.com/sainnhe/gruvbox-material"
+    },
+    "lazydev.nvim": {
+      "rev": "01bc2aa",
+      "src": "https://github.com/folke/lazydev.nvim"
+    },
+    "mapledark.nvim": {
+      "rev": "bbdaa1083f61ce5b232cabf6bc27ada4d0898704",
+      "src": "https://github.com/abhilash26/mapledark.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "ef40b78",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "oil.nvim": {
+      "rev": "7e1cd77",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd522",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "b4da76b",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "5da1b76e64daf4c5d410f06bcb6b9cb640da7dfd",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
+    "vague.nvim": {
+      "rev": "dba28050887c2810b5ebf9e0143b4e919bd55757",
+      "src": "https://github.com/vague-theme/vague.nvim"
+    },
+    "vitesse-nvim": {
+      "rev": "fb1c9037095819c4bdaee375108ef9cf3d199cb2",
+      "src": "https://github.com/ptdewey/vitesse-nvim"
+    },
+    "vitesse.nvim": {
+      "rev": "1e00ee10a7ac23426684f43be80eb3edf92c082c",
+      "src": "https://github.com/2nthony/vitesse.nvim"
+    }
+  }
+}
