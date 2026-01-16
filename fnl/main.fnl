@@ -1,6 +1,6 @@
 (local check-theme-diffs? false)
-(local enable-terminal-adaptation? false)
-(local main-terminal :alacritty) ; supports alacritty, kitty, ghostty (though ghostty's config file parsing is TODO)
+(local enable-terminal-adaptation? true)
+(local main-terminal :kitty) ; supports alacritty, kitty, ghostty (though ghostty's config file parsing is TODO)
 
 (set vim.o.number true)
 (set vim.o.relativenumber true)
@@ -39,8 +39,9 @@
       (set cmd (string.format "%s %s=%s" cmd key (tostring value))))
     (vim.cmd cmd)))
 
-(let [plugins ["folke/tokyonight.nvim"
+(let [plugins ["AlphaTechnolog/neovim-ayu"
                "stevearc/oil.nvim"
+               "j-hui/fidget.nvim"
                "nvim-lua/plenary.nvim"
                "nvim-telescope/telescope.nvim"
                "neovim/nvim-lspconfig"
@@ -142,8 +143,62 @@
 ; (set vim.g.everforest_background :hard)
 ; (vim.cmd.colorscheme :everforest)
 
+; == ayu mirage ==
+(fn ayu [{: enable-mirage : enable-custom-mayukai} cnf]
+  (fn mayukai-palette [] {:accent "#ffd580"
+                          :bg "#1b1c24"
+                          :black "#282a36"
+                          :comment "#3c4052"
+                          :constant "#cfbafa"
+                          :entity "#95e6cb"
+                          :error "#ed8274"
+                          :fg "#cbccc6"
+                          :fg_idle "#343747"
+                          :func "#ffd580"
+                          :guide_active "#343747"
+                          :guide_normal "#282a36"
+                          :gutter_active "#c7c7c7"
+                          :gutter_normal "#343747"
+                          :keyword "#ed8274"
+                          :line "#282a36"
+                          :lsp_inlay_hint "#c7c7c7"
+                          :lsp_parameter "#d4bfff"
+                          :markup "#f28779"
+                          :operator "#f28779"
+                          :panel_bg "#282a36"
+                          :panel_border "#1b1c24"
+                          :panel_shadow "#1b1c24"
+                          :regexp "#95e6cb"
+                          :selection_bg "#343747"
+                          :selection_border "#343747"
+                          :selection_inactive "#282a36"
+                          :special "#555a74"
+                          :string "#a6cc70"
+                          :tag "#95e6cb"
+                          :ui "#c7c7c7"
+                          :vcs_added "#bae67e"
+                          :vcs_added_bg "#282a36"
+                          :vcs_modified "#95e6cb"
+                          :vcs_removed "#f28779"
+                          :vcs_removed_bg "#343747"
+                          :warning "#fad07b"
+                          :white "#ffffff"})
+  (let [is-mayukai (or enable-custom-mayukai false)
+        is-mirage (if is-mayukai true (or enable-mirage true))
+        palette (if is-mayukai (mayukai-palette) {})
+        ayu (require :ayu)]
+    (ayu.setup {:mirage is-mirage :terminal false :palette palette})
+    (vim.cmd.colorscheme :ayu)))
+
+(ayu {:enable-mirage true :enable-custom-mayukai true})
+
+; ==catppuccin==
+; (let [catppuccin (require :catppuccin)]
+;   (catppuccin.setup {})
+;   (vim.cmd.colorscheme :catppuccin))
+
 ; ==tokyonight theme==
-(vim.cmd.colorscheme :tokyonight)
+; (vim.cmd.colorscheme :tokyonight)
 
 ; ==vague theme==
 ; (let [vague (require :vague)]
@@ -162,7 +217,8 @@
             (hi :Normal bg fg)
             (hi :EndOfBuffer bg bg)
             (hi :WinSeparator nil black)
-            (hi :VertSplit nil black)
+            (hi :VertSplit bg black)
+            (hi :VertSplitNC bg black)
             (hi :StatusLine black fg)
             (hi :StatusLineNC bg black2)
             (hi :LineNr bg black2)
@@ -170,7 +226,7 @@
             (hi :TelescopeBorder bg black)
             (hi :TelescopeSelection black fg)))))
 
-(adapt-to-terminal)
+; (adapt-to-terminal)
 
 ; fuzzy finder
 (let [telescope (require "telescope.builtin")]
@@ -210,9 +266,24 @@
                           :default ["lazydev" "lsp" "path" "snippets" "buffer"]}}))
 
 ; nvim treesitter
-(let [treesitter (require "nvim-treesitter.configs")
+(let [tsitter (require :nvim-treesitter)
       servers ["lua" "zig" "html" "css" "fennel"
                "typescript" "tsx" "javascript"
                "python" "rust" "c" "cpp" "go" "c_sharp"]]
-  (treesitter.setup {:ensure_installed servers
-                     :highlight {:enable true}}))
+  (tsitter.setup {:install_dir (.. (vim.fn.stdpath :data) "/site")})
+  (tsitter.install servers))
+
+(fn setup-treesitter []
+  (let [servers ["lua" "zig" "html" "css" "fennel"
+                 "typescript" "tsx" "javascript"
+                 "python" "rust" "c" "cpp" "go" "c_sharp"]
+        tsitter (require :nvim-treesitter)]
+    (tsitter.setup {:install_dir (.. (vim.fn.stdpath :data) "/site")})
+    (tsitter.install servers)
+    (vim.api.nvim_create_autocmd :BufEnter {:pattern "*"
+                                            :callback (fn [] (vim.treesitter.start))})))
+
+(setup-treesitter)
+
+; fidget
+(let [fidget (require :fidget)] (fidget.setup))
