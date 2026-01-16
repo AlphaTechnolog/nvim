@@ -226,7 +226,7 @@
             (hi :TelescopeBorder bg black)
             (hi :TelescopeSelection black fg)))))
 
-; (adapt-to-terminal)
+(adapt-to-terminal)
 
 ; fuzzy finder
 (let [telescope (require "telescope.builtin")]
