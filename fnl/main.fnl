@@ -280,8 +280,9 @@
         tsitter (require :nvim-treesitter)]
     (tsitter.setup {:install_dir (.. (vim.fn.stdpath :data) "/site")})
     (tsitter.install servers)
-    (vim.api.nvim_create_autocmd :BufEnter {:pattern "*"
-                                            :callback (fn [] (vim.treesitter.start))})))
+    (fn start-ts [] (if (not= vim.bo.filetype "")
+                        (pcall vim.treesitter.start)))
+    (vim.api.nvim_create_autocmd :BufEnter {:pattern "*" :callback start-ts})))
 
 (setup-treesitter)
 
